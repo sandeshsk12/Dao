@@ -56,7 +56,7 @@ import pandas as pd
 import re
 
 
-bot = discum.Client(token="ODg4NDc5MzYxOTQ5MzgwNjU4.GeGlsb.wE24X9vHaUKlvMBbgIwLEe2LMElusiakNOeg6A")
+bot = discum.Client(token="ODg4NDc5MzYxOTQ5MzgwNjU4.GnX8pU.yDedM7XCzZ-4b3shDwYOjCEpSoX8yrsrCfwiIE")
 
 def close_after_fetching(resp, guild_id):
     if bot.gateway.finishedMemberFetching(guild_id):
@@ -180,7 +180,7 @@ def get_counts(server_name,server_id,channel_id,imp_roles):
 
 
 dao_params={
-    "server_name": ['MetricsDao','Biconomy'],
+    "server_name": ['MetricsDAO','Biconomy'],
     "server_id" : ['902943676685230100','692403655474937856'],
     "channel_id" : ['903338987022876702','845957610792157187'],
     "imp_roles" :
@@ -203,3 +203,11 @@ for i in range(len(dao_params)):
 
 
 ############## 
+
+############## number of sub dao and guilds 
+sub_dao_details={
+    "dao_name": ['MetricsDAO','Biconomy'],
+    "number_of_sub_daos" : ['0','0'],
+    "Number_of_guilds" : ['7','0']
+}
+pd.DataFrame(sub_dao_details).to_csv('dao_number.csv')
