@@ -47,6 +47,14 @@ dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview*
 
 with dao_overview:
     st.write('DAO overview')
+
+
+
+
+
+
+
+
 with Community:
   twitter_df=pd.read_csv('twitter_log.csv')
   dao_twitter=twitter_df[twitter_df['Dao Name']==dao_name].sort_values(by='Date',ascending=False)
@@ -60,6 +68,7 @@ with Community:
     title="Twitter followers",
     delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
+  fig.update_layout(height=260, width=600)
   fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
   c1.plotly_chart(fig,use_container_width=True)
 
@@ -72,6 +81,7 @@ with Community:
     delta = {'position': "bottom", 'reference': round(float(dao_twitter['Following'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
   fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+  fig.update_layout(height=260, width=600)
   c2.plotly_chart(fig,use_container_width=True)
 
   discord_df=pd.read_csv('discord_log.csv')
@@ -86,6 +96,7 @@ with Community:
     delta = {'position': "bottom", 'reference': round(float(dao_discord['Total users'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
   fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+  fig.update_layout(height=260, width=600)
   c3.plotly_chart(fig,use_container_width=True)
 
   c1,c2,c3=st.columns(3)
@@ -161,29 +172,95 @@ with Community:
 
   # # c2.image(grid)
   c1.dataframe(discord_dist[['Role','Percent']],use_container_width=True,height=600)
-  c11,c12=st.columns(2)
+
+
+  ##### Dao numbers
+  c1,c2=st.columns(2)
+  dao_number_df=pd.read_csv('dao_number.csv')
+  dao_name
+  dao_number_df=dao_number_df[dao_number_df['dao_name']==dao_name]
   fig = go.Figure(go.Indicator(
     mode = "number",
-    value = round(float(dao_twitter['Followers'][0]),3),
+    value = round(float(dao_number_df['number_of_sub_daos']),3),
     # delta=1,
     # number = {'suffix': "%"},
-    title="Twitter followers",
-    delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
+    title="Number of Sub DAOs",
+    # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
   fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
   fig.update_layout(height=260, width=600)
-  c11.plotly_chart(fig,use_container_width=True)
+  c1.plotly_chart(fig,use_container_width=True)
   fig = go.Figure(go.Indicator(
     mode = "number",
-    value = round(float(dao_twitter['Followers'][0]),3),
+    value = round(float(dao_number_df['Number_of_guilds']),3),
     # delta=1,
     # number = {'suffix': "%"},
-    title="Twitter followers",
-    delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
+    title="Number of Guilds",
+    # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
   fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
   fig.update_layout(height=260, width=600)
-  c12.plotly_chart(fig,use_container_width=True)
+  c2.plotly_chart(fig,use_container_width=True)
+
+
+  with project_metrics:
+    Reach, Retention, Revenue = st.tabs(['**Reach**','**Retention**','**Revenue**'])
+  with Reach: 
+    st.write('a')
+  with Retention :
+       ##### Dao numbers
+    c1,c2,c3=st.columns(3)
+    dao_metrics_period=c2.radio(
+        label="Select timeframe",
+        options=['Daily','Weekly','Monthly'],
+        horizontal=True
+        ,key='dao_metrics_period'
+        
+    )
+    c1,c2=st.columns(2)
+    New_vs_existing_users_df=pd.read_csv('RRR/nve_users.csv')
+    New_vs_existing_users_df=New_vs_existing_users_df[New_vs_existing_users_df['dao_name']==dao_name]
+    New_vs_existing_users_df['date']=pd.to_datetime(New_vs_existing_users_df['date'])
+    New_vs_existing_users_df=New_vs_existing_users_df.resample(dao_metrics_period[0], on='date').mean()
+    color=['#fa750f','#ebb186']
+    New_vs_existing_users_trend=px.bar(New_vs_existing_users_df,x=New_vs_existing_users_df.index,y=['existing_users','new_users_count'], color_discrete_sequence=color)
+    New_vs_existing_users_trend.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    New_vs_existing_users_trend.update_layout(
+      title="New vs existing holders",
+      xaxis_title="Date",
+      yaxis_title="Holders",
+      font=dict(
+          color="White"
+      ))
+    c1.plotly_chart(New_vs_existing_users_trend,use_container_width=True)
+
+
+    stickiness_ratio_df=pd.read_csv('RRR/stickiness_ratio.csv')
+    stickiness_ratio_df=stickiness_ratio_df[stickiness_ratio_df['dao_name']==dao_name]
+    stickiness_ratio_df.fillna(0,inplace=True)
+  
+    stickiness_ratio_df['date']=pd.to_datetime(stickiness_ratio_df['date'])
+    # stickiness_ratio_df=stickiness_ratio_df.resample(dao_metrics_period[0], on='date').mean()
+    color=['#fa750f','#ebb186']
+    stickiness_ratio_trend=px.line(stickiness_ratio_df,x=stickiness_ratio_df.index,y=stickiness_ratio_df['stickiness_ratio'], color_discrete_sequence=color)
+    stickiness_ratio_trend.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    stickiness_ratio_trend.update_layout(
+      title="Stickiness ratio",
+      xaxis_title="Date",
+      yaxis_title="Ratio",
+      font=dict(
+          color="White"
+      ),
+      xaxis=dict(showgrid=False),
+      yaxis=dict(showgrid=True))
+    c2.plotly_chart(stickiness_ratio_trend,use_container_width=True)
+    
+    
+
+
+
+  with governance:
+    st.write('a')
   
   
 

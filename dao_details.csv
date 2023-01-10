@@ -1,0 +1,3 @@
+Name,Token,Table,identifier,user
+Biconomy,0xf17e65822b568b3903685a7c9f496cf7656cc6c2,ethereum.core.fact_token_transfers,contract_address,to_address
+MetricsDAO,0x15848C9672e99be386807b9101f83A16EB017bb5,polygon.core.fact_token_transfers,contract_address,to_address
