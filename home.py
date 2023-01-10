@@ -254,14 +254,168 @@ with Community:
       xaxis=dict(showgrid=False),
       yaxis=dict(showgrid=True))
     c2.plotly_chart(stickiness_ratio_trend,use_container_width=True)
+
+    stickiness_ratio_df=pd.read_csv('RRR/stickiness_ratio.csv')
+    stickiness_ratio_df=stickiness_ratio_df[stickiness_ratio_df['dao_name']==dao_name]
+    stickiness_ratio_df.fillna(0,inplace=True)
+  
+    stickiness_ratio_df['date']=pd.to_datetime(stickiness_ratio_df['date'])
+    # stickiness_ratio_df=stickiness_ratio_df.resample(dao_metrics_period[0], on='date').mean()
+    color=['#fa750f','#ebb186']
+    stickiness_ratio_trend=px.line(stickiness_ratio_df,x=stickiness_ratio_df.index,y=stickiness_ratio_df['stickiness_ratio'], color_discrete_sequence=color)
+    stickiness_ratio_trend.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    stickiness_ratio_trend.update_layout(
+      title="Stickiness ratio",
+      xaxis_title="Date",
+      yaxis_title="Ratio",
+      font=dict(
+          color="White"
+      ),
+      xaxis=dict(showgrid=False),
+      yaxis=dict(showgrid=True))
+    c2.plotly_chart(stickiness_ratio_trend,use_container_width=True)
     
     
 
 
 
   with governance:
-    st.write('a')
-  
+    c1,c2,c3=st.columns(3)
+    gov_period=c2.radio(
+        label="Select timeframe",
+        options=['Daily','Weekly','Monthly'],
+        horizontal=True
+        ,key='gov_period'
+        
+    )
+
+
+    c1,c2=st.columns((70,30))
+    proposal_trend=pd.read_csv('governance/voting_prop_trend.csv')
+    proposal_trend=proposal_trend[proposal_trend['Name']==dao_name]  
+    proposal_trend['date']=pd.to_datetime(proposal_trend['date'])
+    
+    proposal_trend=proposal_trend.resample(gov_period[0], on='date').sum()
+    color=['#fa750f','#ebb186']
+    proposal_trend_fig=px.bar(proposal_trend,x=proposal_trend.index,y=proposal_trend['NUMBER_OF_PROPOSALS'], color_discrete_sequence=color)
+    proposal_trend_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    proposal_trend_fig.update_layout(
+      title="Trend of Proposals",
+      xaxis_title="Date",
+      yaxis_title="Proposals",
+      font=dict(
+          color="White"
+      ),
+      xaxis=dict(showgrid=False),
+      yaxis=dict(showgrid=True))
+    proposal_trend_fig.update_layout(height=550)
+    c1.plotly_chart(proposal_trend_fig,use_container_width=True)
+
+
+    past_prop=pd.read_csv('governance/total_number_of_proposals_past.csv')
+    past_prop=past_prop[past_prop['Name']==dao_name]
+    fig = go.Figure(go.Indicator(
+      mode = "number",
+      value = round(float(past_prop['NUMBER_OF_PROPOSALS']),3),
+      # delta=1,
+      # number = {'suffix': "%"},
+      title="Past proposals",
+      # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
+      domain = {'x': [0, 1], 'y': [0, 1]}))
+    fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    fig.update_layout(height=260, width=600)
+    c2.plotly_chart(fig,use_container_width=True)
+
+    ongoin_proposals=pd.read_csv('governance/number_of_ongoing_proposals.csv')
+    try: 
+      ongoin_proposals=ongoin_proposals[ongoin_proposals['Name']==dao_name]
+      fig = go.Figure(go.Indicator(
+        mode = "number",
+        value = round(float(ongoin_proposals['NUMBER_OF_PROPOSALS']),3),
+        # delta=1,
+        # number = {'suffix': "%"},
+        title="Ongoing proposals",
+        # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
+        domain = {'x': [0, 1], 'y': [0, 1]}))
+      fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+      fig.update_layout(height=260, width=600)
+      c2.plotly_chart(fig,use_container_width=True)
+    except:
+      fig = go.Figure(go.Indicator(
+        mode = "number",
+        value = round(float(0),3),
+        # delta=1,
+        # number = {'suffix': "%"},
+        title="Ongoing proposals",
+        # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
+        domain = {'x': [0, 1], 'y': [0, 1]}))
+      fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+      fig.update_layout(height=260, width=600)
+      c2.plotly_chart(fig,use_container_width=True)
+
+    ongoin_proposal_list=pd.read_csv('governance/ongoing_proposals.csv')
+    st.subheader('Ongoing proposals')
+    try:
+      st.dataframe(ongoin_proposal_list[['PROPOSAL_TITLE','PROPOSAL_TEXT','VOTING_START','VOTING_ENDS']])
+    except:
+      st.subheader('No ongoing proposals')
+
+    c1,c2=st.columns((30,70))
+    proposal_trend=pd.read_csv('governance/voting_prop_trend.csv')
+    proposal_trend=proposal_trend[proposal_trend['Name']==dao_name]  
+    proposal_trend['date']=pd.to_datetime(proposal_trend['date'])
+    
+    proposal_trend=proposal_trend.resample(gov_period[0], on='date').sum()
+    color=['#fa750f','#ebb186']
+    proposal_trend_fig=px.bar(proposal_trend,x=proposal_trend.index,y=proposal_trend['NUMBER_OF_VOTERS'], color_discrete_sequence=color)
+    proposal_trend_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    proposal_trend_fig.update_layout(
+      title="Trend of voters",
+      xaxis_title="Date",
+      yaxis_title="NUMBER_OF_VOTERS",
+      font=dict(
+          color="White"
+      ),
+      xaxis=dict(showgrid=False),
+      yaxis=dict(showgrid=True))
+    proposal_trend_fig.update_layout(height=350)
+    c2.plotly_chart(proposal_trend_fig,use_container_width=True)
+    
+    
+    past_prop=pd.read_csv('governance/average_duration_between_proposals.csv')
+    past_prop=past_prop[past_prop['Name']==dao_name]
+    fig = go.Figure(go.Indicator(
+      mode = "number",
+      value = round(float(past_prop['AVERAGE_DURATION_BETWEEN_PROPOSALS']),3),
+      # delta=1,
+      # number = {'suffix': "%"},
+      title="Average duration between proposals",
+      number = {'suffix': " Days"},
+      # delta = {'position': "bottom", 'reference': round(float(dao_twitter['Followers'][1]),3)},
+      domain = {'x': [0, 1], 'y': [0, 1]}))
+    fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    fig.update_layout(height=350, width=600)
+    c1.plotly_chart(fig,use_container_width=True)
+    c1,c2=st.columns((30,70))
+
+
+
+    proposal_trend_fig=px.line(proposal_trend,x=proposal_trend.index,y=proposal_trend['RATIO'], color_discrete_sequence=color)
+    proposal_trend_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    proposal_trend_fig.update_layout(
+      title="Voting power per voter",
+      xaxis_title="Date",
+      yaxis_title="Ratio",
+      font=dict(
+          color="White"
+      ),
+      xaxis=dict(showgrid=False),
+      yaxis=dict(showgrid=True))
+    proposal_trend_fig.update_layout(height=350)
+    c2.plotly_chart(proposal_trend_fig,use_container_width=True)
+
+
+
   
 
 
