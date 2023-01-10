@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 from pytrends.request import TrendReq
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from st_aggrid import AgGrid
+
 pytrends = TrendReq(hl='en-US', tz=360) 
 
 
