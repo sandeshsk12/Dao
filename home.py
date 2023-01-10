@@ -1,7 +1,7 @@
 import streamlit as st 
 import seaborn as sns
 import plotly.express as px
-from shroomdk import ShroomDK
+
 import pandas as pd
 from datetime import datetime as dt
 import matplotlib.pyplot as plt
@@ -16,7 +16,7 @@ import plotly.graph_objects as go
 from pytrends.request import TrendReq
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-from st_aggrid import AgGrid
+
 pytrends = TrendReq(hl='en-US', tz=360) 
 
 
