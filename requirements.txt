@@ -8,9 +8,3 @@ scikit-learn
 shroomdk
 plost
 pytrends
-shroomdk
-datetime
-time
-urllib
-pytrends
-st_aggrid
