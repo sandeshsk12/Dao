@@ -1,7 +1,7 @@
 import streamlit as st 
 import seaborn as sns
 import plotly.express as px
-from shroomdk import ShroomDK
+
 import pandas as pd
 from datetime import datetime as dt
 import matplotlib.pyplot as plt
