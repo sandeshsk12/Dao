@@ -414,6 +414,26 @@ with Community:
     proposal_trend_fig.update_layout(height=350)
     c2.plotly_chart(proposal_trend_fig,use_container_width=True)
 
+    voting_power_dist=pd.read_csv('governance/voting_power.csv')
+    # st.write(voting_power_dist)
+    voting_power_dist=voting_power_dist[voting_power_dist['dao_name']==dao_name]
+    voting_power_dist_fig=px.violin(voting_power_dist,y='voting_power', color_discrete_sequence=color)
+    voting_power_dist_fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+    voting_power_dist_fig.update_layout(
+      title="Voting power distribution",
+      # xaxis_title="Date",
+      yaxis_title="Ratio",
+      font=dict(
+          color="White"
+      ),
+      xaxis=dict(showgrid=False),
+      yaxis=dict(showgrid=True))
+    voting_power_dist_fig.update_layout(height=720)
+    c1.plotly_chart(voting_power_dist_fig,use_container_width=True)
+    voting_power_dist=(voting_power_dist.sort_values(by='voting_power',ascending=False))
+    voting_power_dist['percentage']=100*voting_power_dist['voting_power']/voting_power_dist['voting_power'].sum()
+    # c2.write(voting_power_dist)
+    c2.dataframe(voting_power_dist[['voter','voting_power','percentage']].head(5),use_container_width=True,height=450)
 
 
   

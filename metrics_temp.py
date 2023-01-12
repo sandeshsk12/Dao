@@ -188,46 +188,46 @@ dao_details=pd.read_csv('dao_details.csv')
 
 
 ############# ########## month on month users
-sr_df=pd.DataFrame([])
-for dao_name in dao_list: 
-    dao_details_row=dao_details[dao_details['Name']==dao_name]
-    sr = f"""
-    With daily_active_users as (
-    SELECT date_trunc('month', day) as date, avg(active_addresses) as avg_dau
-    FROM (
-        SELECT date_trunc('day', block_timestamp) as day, count(distinct  {dao_details_row['user'].values[0]} ) AS active_addresses
-        FROM {dao_details_row['Table'].values[0]}
-        Where 1=1 
-            AND {dao_details_row['identifier'].values[0]}  = lower('{dao_details_row['Token'].values[0]}' )
-            -- AND STATUS = 'SUCCESS'
-            AND block_timestamp > CURRENT_DATE - interval '12 month'
-    GROUP BY day
-            )
-    GROUP BY date
-    ),
-    monthly_active_users as (
-            SELECT date_trunc('month', block_timestamp) as date, count(distinct  {dao_details_row['user'].values[0]})  AS mau
-        FROM {dao_details_row['Table'].values[0]}
-        Where 1=1 
-            AND  {dao_details_row['user'].values[0]}  = lower('{dao_details_row['Token'].values[0]}')
-            -- AND STATUS = 'SUCCESS'
-            AND block_timestamp > CURRENT_DATE - interval '12 month'
-            GROUP BY date
-    )
-    SELECT '{dao_details_row['Name'].values[0]}' as dao_name, daily.date as date, (daily.avg_dau/monthly.mau) as stickiness_ratio
-    FROM daily_active_users daily
-    LEFT JOIN monthly_active_users monthly
-        ON daily.date = monthly.date
-    ORDER BY date
+# sr_df=pd.DataFrame([])
+# for dao_name in dao_list: 
+#     dao_details_row=dao_details[dao_details['Name']==dao_name]
+#     sr = f"""
+#     With daily_active_users as (
+#     SELECT date_trunc('month', day) as date, avg(active_addresses) as avg_dau
+#     FROM (
+#         SELECT date_trunc('day', block_timestamp) as day, count(distinct  {dao_details_row['user'].values[0]} ) AS active_addresses
+#         FROM {dao_details_row['Table'].values[0]}
+#         Where 1=1 
+#             AND {dao_details_row['identifier'].values[0]}  = lower('{dao_details_row['Token'].values[0]}' )
+#             -- AND STATUS = 'SUCCESS'
+#             AND block_timestamp > CURRENT_DATE - interval '12 month'
+#     GROUP BY day
+#             )
+#     GROUP BY date
+#     ),
+#     monthly_active_users as (
+#             SELECT date_trunc('month', block_timestamp) as date, count(distinct  {dao_details_row['user'].values[0]})  AS mau
+#         FROM {dao_details_row['Table'].values[0]}
+#         Where 1=1 
+#             AND  {dao_details_row['user'].values[0]}  = lower('{dao_details_row['Token'].values[0]}')
+#             -- AND STATUS = 'SUCCESS'
+#             AND block_timestamp > CURRENT_DATE - interval '12 month'
+#             GROUP BY date
+#     )
+#     SELECT '{dao_details_row['Name'].values[0]}' as dao_name, daily.date as date, (daily.avg_dau/monthly.mau) as stickiness_ratio
+#     FROM daily_active_users daily
+#     LEFT JOIN monthly_active_users monthly
+#         ON daily.date = monthly.date
+#     ORDER BY date
         
 
 
-    """
-    query_result_set = sdk.query(sr)
-    res=(pd.DataFrame(query_result_set.records))
-    print(res)
-    sr_df=pd.concat([sr_df,res],axis=0)
-sr_df.to_csv('RRR/stickiness_ratio.csv')
+#     """
+#     query_result_set = sdk.query(sr)
+#     res=(pd.DataFrame(query_result_set.records))
+#     print(res)
+#     sr_df=pd.concat([sr_df,res],axis=0)
+# sr_df.to_csv('RRR/stickiness_ratio.csv')
 
 ###### new addresses
 # na_df=pd.DataFrame([])
@@ -267,3 +267,25 @@ sr_df.to_csv('RRR/stickiness_ratio.csv')
 #     res=(pd.DataFrame(query_result_set.records))
 #     na_df=pd.concat([na_df,res],axis=1)
 # na_df.to_csv('RRR/new_users.csv')
+
+
+##### voting power dist
+voting_power_dist=pd.DataFrame([])
+for dao_name in dao_list: 
+    dao_details_row=dao_details[dao_details['Name']==dao_name]
+    vp = f"""
+        with latest_proposal as 
+            (
+            select distinct proposal_id
+            from ethereum.core.ez_snapshot
+            where space_id = '{dao_details_row['SPACE_ID'].values[0]}'
+            qualify(row_number() over (partition by space_id order by PROPOSAL_END_TIME desc)=1)  
+            ) 
+        select '{dao_details_row['Name'].values[0]}'  as dao_name,space_id, proposal_id,VOTING_POWER from ethereum.core.ez_snapshot
+        where proposal_id in ( select * from latest_proposal)
+
+    """
+    query_result_set = sdk.query(vp)
+    res=(pd.DataFrame(query_result_set.records))
+    voting_power_dist=pd.concat([voting_power_dist,res],axis=0)
+voting_power_dist.to_csv('governance/voting_power.csv')
