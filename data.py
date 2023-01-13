@@ -575,13 +575,22 @@ except:
     pd.DataFrame([]).to_csv('governance/ongoing_proposals.csv')
 
 
-######### Voting,proposal trend
+######### Voting trend
 
 proposal_voter_trend = "https://node-api.flipsidecrypto.com/api/v2/queries/6953f8c5-da3f-4790-9bf9-5a79d25f084d/data/latest"
 proposal_voter_trend = pd.read_json(proposal_voter_trend)
 proposal_voter_trend_with_dao_name=pd.merge(proposal_voter_trend,dao_details,on='SPACE_ID',how='left')
 proposal_voter_trend_with_dao_name=proposal_voter_trend_with_dao_name[['Name','date','SPACE_ID','NUMBER_OF_PROPOSALS','NUMBER_OF_VOTERS','VOTES','RATIO']]
 proposal_voter_trend_with_dao_name.to_csv('governance/voting_prop_trend.csv')
+
+
+######### Proposal trend
+
+proposal_trend = "https://node-api.flipsidecrypto.com/api/v2/queries/c9b80d34-b79d-465e-a41f-71e46a458e0e/data/latest"
+proposal_trend = pd.read_json(proposal_trend)
+proposal_trend_with_dao_name=pd.merge(proposal_trend,dao_details,on='SPACE_ID',how='left')
+proposal_trend_with_dao_name=proposal_trend_with_dao_name[['Name','date','SPACE_ID','NUMBER_OF_PROPOSALS','NUMBER_OF_VOTERS','VOTES','RATIO']]
+proposal_trend_with_dao_name.to_csv('governance/proposal_trend.csv')
 
 ########### Average duration beween proposals
 average_duration_between_proposals = "https://node-api.flipsidecrypto.com/api/v2/queries/f579fe5a-239b-42a4-b97a-de700b1a26fd/data/latest"

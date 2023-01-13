@@ -84,14 +84,14 @@ with Community:
   fig.update_layout(height=260, width=600)
   c2.plotly_chart(fig,use_container_width=True)
 
-  discord_df=pd.read_csv('discord_log.csv')
+  discord_df=pd.read_csv('/media/sandesh/7b4515cf-7277-44bc-a068-425d5c6990f9/crypto/Dao/discord_log.csv')
   dao_discord=discord_df[discord_df['Dao Name']==dao_name].sort_values(by='Date',ascending=False)
   dao_discord.reset_index(inplace=True)
   fig = go.Figure(go.Indicator(
     mode = "number+delta",
     value = round(float(dao_discord['Total users'][0]),3),
     # delta=1,
-    # number = {'suffix': "%"},
+    # number = {'suffix': "%"},s
     title="Discord community",
     delta = {'position': "bottom", 'reference': round(float(dao_discord['Total users'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
@@ -214,7 +214,8 @@ with Community:
         label="Select timeframe",
         options=['Daily','Weekly','Monthly'],
         horizontal=True
-        ,key='dao_metrics_period'
+        ,key='dao_metrics_period',
+        index=1
         
     )
     c1,c2=st.columns(2)
