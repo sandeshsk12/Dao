@@ -257,9 +257,9 @@ with Community:
 
         ##### Dao numbers
     c1,c2=st.columns(2)
-    dao_number_df=pd.read_csv('dao_number.csv')
+    dao_number_df=pd.read_csv('dao_details.csv')
     # dao_name
-    dao_number_df_l=dao_number_df[dao_number_df['dao_name']==dao_name_l]
+    dao_number_df_l=dao_number_df[dao_number_df['Name']==dao_name_l]
     fig = go.Figure(go.Indicator(
         mode = "number",
         value = round(float(dao_number_df_l['number_of_sub_daos']),3),
@@ -285,7 +285,7 @@ with Community:
 
 
     # dao_name
-    dao_number_df_r=dao_number_df[dao_number_df['dao_name']==dao_name_r]
+    dao_number_df_r=dao_number_df[dao_number_df['Name']==dao_name_r]
     fig = go.Figure(go.Indicator(
         mode = "number",
         value = round(float(dao_number_df_r['number_of_sub_daos']),3),

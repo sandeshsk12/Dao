@@ -8,9 +8,10 @@ from shroomdk import ShroomDK
 
 sdk = ShroomDK("00dba474-bd21-4d4d-a9b9-c5eaa08aac33")
 current_directory = os.getcwd()
+dao_details=pd.read_csv('dao_details.csv')
+print(dao_details.columns)
+dao_list=dao_details['Name']
 
-
-dao_list=['MetricsDAO','biconomy']
 
 
 
@@ -21,7 +22,9 @@ import tweepy
 twitter_log=pd.read_csv('twitter_log.csv')
 auth = tweepy.OAuth2BearerHandler("AAAAAAAAAAAAAAAAAAAAAEKQiwEAAAAACaGFqOl1LhYAkmTGKqN9%2FrrFNqc%3D47Yh8KbJE0crZ8bUtE7AS7h88iT5gJq9H3cy63zWZqGmf8DwJJ")
 api = tweepy.API(auth)
+# print(dao_list)
 for dao in dao_list:
+    print(dao_details['Name'])
     user_dict=(api.get_user(screen_name=dao))._json
     twitter_today=pd.DataFrame([[today,user_dict['name'],user_dict['followers_count'],user_dict['friends_count']]],columns=['Date','Dao Name','Followers','Following'])
     twitter_log=pd.concat([twitter_log,twitter_today])
@@ -59,7 +62,7 @@ import pandas as pd
 import re
 
 
-bot = discum.Client(token="MzkwNDkzMjU1MTY4Njg4MTI4.G1uQj6.js0zFcO5qtPk0yt-FkFuptA2DFqe8akXe328mw")
+bot = discum.Client(token="MzkwNDkzMjU1MTY4Njg4MTI4.G4Kv2i.qegt36LwQEMdqGN1_e7jNAL2LYsR6jrwg7Jxbw")
 
 def close_after_fetching(resp, guild_id):
     if bot.gateway.finishedMemberFetching(guild_id):
@@ -193,6 +196,7 @@ dao_params={
     ],
 }
 dao_params=pd.DataFrame(dao_params)
+# dao_params=pd.read_csv('dao_details.csv')
 # print(dao_params['server_id'])
 print(dao_params)
 print(dao_params.iloc[0,1])
@@ -208,59 +212,60 @@ for i in range(len(dao_params)):
 ############## 
 
 ############## number of sub dao and guilds 
-sub_dao_details={
-    "dao_name": ['MetricsDAO','Biconomy'],
-    "number_of_sub_daos" : ['0','0'],
-    "Number_of_guilds" : ['7','0']
-}
-pd.DataFrame(sub_dao_details).to_csv('dao_number.csv')
+#  Manually dao_list
+# sub_dao_details={
+#     "dao_name": ['MetricsDAO','Biconomy'],
+#     "number_of_sub_daos" : ['0','0'],
+#     "Number_of_guilds" : ['7','0']
+# }
+# pd.DataFrame(sub_dao_details).to_csv('dao_number.csv')
 
 
 
 
 
 
-########## New vs existing users
-my_address = "0xD5B130e81C5E2539d86f297E599A5adc127CA853"
-dao_name='MetricsDao'
-token_address='0x15848C9672e99be386807b9101f83A16EB017bb5'
-nve_users = f"""
-with user_cohorts as (
-    SELECT  FROM_ADDRESS as address
-            , min(block_timestamp::date) as cohortDate
-    FROM ethereum.core.fact_transactions
-    Where 1=1 
-  		AND TO_ADDRESS = lower('0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03')
-        AND STATUS = 'SUCCESS'
-    GROUP BY address
-),
-     new_users as (
-    SELECT  cohortDate as date, count(distinct address) as new_users_count
-    FROM user_cohorts uc
-    GROUP BY date
-),
-     all_users as (
-    SELECT block_timestamp::date as date
-        ,count(distinct FROM_ADDRESS) as total_players
+# ########## New vs existing users
+
+# dao_name='MetricsDao'
+# token_address='0x15848C9672e99be386807b9101f83A16EB017bb5'
+# nve_users = f"""
+# with user_cohorts as (
+#     SELECT  FROM_ADDRESS as address
+#             , min(block_timestamp::date) as cohortDate
+#     FROM ethereum.core.fact_transactions
+#     Where 1=1 
+#   		AND TO_ADDRESS = lower('0x9C8fF314C9Bc7F6e59A9d9225Fb22946427eDC03')
+#         AND STATUS = 'SUCCESS'
+#     GROUP BY address
+# ),
+#      new_users as (
+#     SELECT  cohortDate as date, count(distinct address) as new_users_count
+#     FROM user_cohorts uc
+#     GROUP BY date
+# ),
+#      all_users as (
+#     SELECT block_timestamp::date as date
+#         ,count(distinct FROM_ADDRESS) as total_players
   
-    FROM ethereum.core.fact_transactions
-    Where 1=1 
-  		AND TO_ADDRESS = lower('{{token_address}}')
-        AND STATUS = 'SUCCESS'
- GROUP BY date
-)
-    SELECT  au.date
-         , nu.new_users_count
-         , au.total_players - nu.new_users_count AS Existing_Users
-         , (nu.new_users_count/au.total_players)*100 as New_User_Percentage
-    FROM all_users au
-    LEFT JOIN new_users nu
-        ON au.date = nu.date;
+#     FROM ethereum.core.fact_transactions
+#     Where 1=1 
+#   		AND TO_ADDRESS = lower('{{token_address}}')
+#         AND STATUS = 'SUCCESS'
+#  GROUP BY date
+# )
+#     SELECT  au.date
+#          , nu.new_users_count
+#          , au.total_players - nu.new_users_count AS Existing_Users
+#          , (nu.new_users_count/au.total_players)*100 as New_User_Percentage
+#     FROM all_users au
+#     LEFT JOIN new_users nu
+#         ON au.date = nu.date;
 
-"""
-query_result_set = sdk.query(nve_users)
-res=(pd.DataFrame(query_result_set.records))
-res.to_csv('RRR/{}_nve_users.csv'.format(dao_name))
+# """
+# query_result_set = sdk.query(nve_users)
+# res=(pd.DataFrame(query_result_set.records))
+# res.to_csv('RRR/{}_nve_users.csv'.format(dao_name))
 
 
 ############# project overview
@@ -276,7 +281,7 @@ sdk = ShroomDK("00dba474-bd21-4d4d-a9b9-c5eaa08aac33")
 current_directory = os.getcwd()
 
 
-dao_list=['Biconomy','MetricsDAO']
+dao_list=dao_details['Name'].to_list()
 dao_details=pd.read_csv('dao_details.csv')
 
 
@@ -289,7 +294,7 @@ dao_details=pd.read_csv('dao_details.csv')
 
 
 ###### Cohort analysis
-
+print('starting sql')
 cohort_analysis_df=pd.DataFrame([])
 for dao_name in dao_list: 
     dao_details_row=dao_details[dao_details['Name']==dao_name]
@@ -354,7 +359,7 @@ for dao_name in dao_list:
 
 cohort_analysis_df.to_csv('RRR/cohort_users.csv')
 
-
+print('finsihed sql')
 
 
 
@@ -539,7 +544,7 @@ na_df.to_csv('RRR/new_users.csv')
 
 
 ######### Governance
-dao_list=['Biconomy','MetricsDAO']
+
 
 dao_details=pd.read_csv('dao_details.csv')
 ########## Number of proposals
