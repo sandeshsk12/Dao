@@ -414,9 +414,9 @@ with Community:
         stickiness_ratio_trend_l=px.line(stickiness_ratio_df_l,x=stickiness_ratio_df_l.index,y=stickiness_ratio_df_l['stickiness_ratio'], color_discrete_sequence=color)
         stickiness_ratio_trend_l.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
         stickiness_ratio_trend_l.update_layout(
-        title="Stickiness ratio",
+        title="Stickiness percentage",
         xaxis_title="Date",
-        yaxis_title="Ratio",
+        yaxis_title="percentage",
         font=dict(
             color="White"
         ),
@@ -433,9 +433,9 @@ with Community:
         stickiness_ratio_trend_r=px.line(stickiness_ratio_df_r,x=stickiness_ratio_df_r.index,y=stickiness_ratio_df_r['stickiness_ratio'], color_discrete_sequence=color)
         stickiness_ratio_trend_r.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
         stickiness_ratio_trend_r.update_layout(
-        title="Stickiness ratio",
+        title="Stickiness percentage",
         xaxis_title="Date",
-        yaxis_title="Ratio",
+        yaxis_title="percentage",
         font=dict(
             color="White"
         ),
