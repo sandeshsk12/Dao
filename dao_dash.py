@@ -54,7 +54,7 @@ dao_name_r = c3.selectbox(
     ('MetricsDAO', 'Biconomy'), key='right',index=1)
 
 st.write('You selected : {} and {}'.format(dao_name_l,dao_name_r))
-st.write(" github link of project : https://github.com/sandeshsk12/Dao)
+st.write(" github link of project : https://github.com/sandeshsk12/Dao")
 dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview**','**Community**','**Tokenomics**','**Governance**'])
 
 
