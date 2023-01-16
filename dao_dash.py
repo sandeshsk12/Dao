@@ -336,24 +336,24 @@ with Community:
 
     with project_metrics:
       #hardcoded for now, will be made to change dynamically in next version.
-    st.markdown(grey_card(title='Biconomy tokenization model ',text=
-    """
-    What is the Biconomy token? <br>
-    $BICO is the native work & governance token of the Biconomy multi-chain relayer infrastructure. Its total supply is 1 billion, and 115M of it \
-    curculating according to the latest data available as of January 2023. Over 38% of the BICO supply is allocated to community members as rewards and \
-    incentives (on a 47-month release schedule), compared to 32% combined to the foundation and team and advisors (on a 3-year vesting schedule). \
-    Read more here: https://medium.com/biconomy/bico-token-economics-b33ff71f673d
-    """
-    ),unsafe_allow_html=True)
-    st.markdown(grey_card(title='MetricsDAO tokenization model ',text=
-    """
-    What is the MetricsDao token? <br>
-    xMETRIC is a beta token of MetricsDAO. It does not have any monetary value and not transferrable, and only used as on-chain \
-    immutable proof of early participation in the DAO. xMETRIC tokens are not now, and will never be, transferrable, nor do they confer any \
-    rights whatsoever to holders of xMETRIC tokens (including but not limited to voting rights; governance rights; or rights to any profits, \
-    losses or distributions of any person, organization, DAO or other entity or group). Learn more about xMETRIC: https://docs.metricsdao.xyz/metricsdao/xmetric
-    """
-    ),unsafe_allow_html=True)
+        st.markdown(grey_card(title='Biconomy tokenization model ',text=
+        """
+        What is the Biconomy token? <br>
+        $BICO is the native work & governance token of the Biconomy multi-chain relayer infrastructure. Its total supply is 1 billion, and 115M of it \
+        curculating according to the latest data available as of January 2023. Over 38% of the BICO supply is allocated to community members as rewards and \
+        incentives (on a 47-month release schedule), compared to 32% combined to the foundation and team and advisors (on a 3-year vesting schedule). \
+        Read more here: https://medium.com/biconomy/bico-token-economics-b33ff71f673d
+            """
+        ),unsafe_allow_html=True)
+        st.markdown(grey_card(title='MetricsDAO tokenization model ',text=
+        """
+        What is the MetricsDao token? <br>
+        xMETRIC is a beta token of MetricsDAO. It does not have any monetary value and not transferrable, and only used as on-chain \
+        immutable proof of early participation in the DAO. xMETRIC tokens are not now, and will never be, transferrable, nor do they confer any \
+        rights whatsoever to holders of xMETRIC tokens (including but not limited to voting rights; governance rights; or rights to any profits, \
+        losses or distributions of any person, organization, DAO or other entity or group). Learn more about xMETRIC: https://docs.metricsdao.xyz/metricsdao/xmetric
+        """
+        ),unsafe_allow_html=True)
         #Reach, Retention, Revenue = st.tabs(['**Reach**','**Retention**','**Revenue**'])
     #with Reach: 
         #st.write('a')
