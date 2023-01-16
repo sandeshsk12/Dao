@@ -39,10 +39,10 @@ st.markdown(f"""
 c1,c2,c3=st.columns((20,40,40))
 dao_name_l = c2.selectbox(
     'Which DAO would you like to know about ?',
-    ('MetricsDAO', 'Biconomy', 'Mobile phone'), key='left')
+    ('MetricsDAO', 'Biconomy'), key='left')
 dao_name_r = c3.selectbox(
     'Which DAO would you like to know about ?',
-    ('MetricsDAO', 'Biconomy', 'Mobile phone'), key='right')
+    ('MetricsDAO', 'Biconomy'), key='right')
 
 st.write('You selected : {} and {}'.format(dao_name_l,dao_name_r))
 dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview**','**Community**','**DAO metrics**','**Governance**'])
