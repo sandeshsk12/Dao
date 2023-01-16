@@ -48,10 +48,10 @@ def grey_card(header='',title='',text=''):
 c1,c2,c3=st.columns((20,40,40))
 dao_name_l = c2.selectbox(
     'Which DAO would you like to know about ?',
-    ('MetricsDAO', 'Biconomy'), key='left')
+    ('MetricsDAO', 'Biconomy'), key='left',index=0)
 dao_name_r = c3.selectbox(
     'Which DAO would you like to know about ?',
-    ('MetricsDAO', 'Biconomy'), key='right')
+    ('MetricsDAO', 'Biconomy'), key='right',index=1)
 
 st.write('You selected : {} and {}'.format(dao_name_l,dao_name_r))
 dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview**','**Community**','**Tokenomics**','**Governance**'])
