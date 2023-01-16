@@ -89,12 +89,12 @@ with Community:
     dao_twitter_l=twitter_df[twitter_df['Dao Name']==dao_name_l].sort_values(by='Date',ascending=False)
     dao_twitter_l.reset_index(inplace=True)
     fig = go.Figure(go.Indicator(
-        mode = "number+delta",
+        mode = "number",
         value = round(float(dao_twitter_l['Followers'][0]),3),
         # delta=1,
         # number = {'suffix': "%"},
         title="Twitter followers",
-        delta = {'position': "bottom", 'reference': round(float(dao_twitter_l['Followers'][1]),3)},
+        #delta = {'position': "bottom", 'reference': round(float(dao_twitter_l['Followers'][1]),3)},
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout(height=250, width=600)
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
@@ -103,12 +103,12 @@ with Community:
     dao_twitter_r=twitter_df[twitter_df['Dao Name']==dao_name_r].sort_values(by='Date',ascending=False)
     dao_twitter_r.reset_index(inplace=True)
     fig = go.Figure(go.Indicator(
-        mode = "number+delta",
+        mode = "number",
         value = round(float(dao_twitter_r['Followers'][0]),3),
         # delta=1,
         # number = {'suffix': "%"},
         title="Twitter followers",
-        delta = {'position': "bottom", 'reference': round(float(dao_twitter_l['Followers'][1]),3)},
+        #delta = {'position': "bottom", 'reference': round(float(dao_twitter_l['Followers'][1]),3)},
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout(height=250, width=600)
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
@@ -116,24 +116,24 @@ with Community:
 
 
     fig = go.Figure(go.Indicator(
-    mode = "number+delta",
+    mode = "number",
     value = round(float(dao_twitter_l['Following'][0]),3),
     # delta=1,
     # number = {'suffix': "%"},
     title="Twitter Following",
-    delta = {'position': "bottom", 'reference': round(float(dao_twitter_l['Following'][1]),3)},
+    #delta = {'position': "bottom", 'reference': round(float(dao_twitter_l['Following'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
     fig.update_layout(height=260, width=600)
     c2.plotly_chart(fig,use_container_width=True)
 
     fig = go.Figure(go.Indicator(
-    mode = "number+delta",
+    mode = "number",
     value = round(float(dao_twitter_r['Following'][0]),3),
     # delta=1,
     # number = {'suffix': "%"},
     title="Twitter Following",
-    delta = {'position': "bottom", 'reference': round(float(dao_twitter_r['Following'][1]),3)},
+    #delta = {'position': "bottom", 'reference': round(float(dao_twitter_r['Following'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
     fig.update_layout(height=260, width=600)
@@ -143,12 +143,12 @@ with Community:
     dao_discord_l=discord_df[discord_df['Dao Name']==dao_name_l].sort_values(by='Date',ascending=False)
     dao_discord_l.reset_index(inplace=True)
     fig = go.Figure(go.Indicator(
-        mode = "number+delta",
+        mode = "number",
         value = round(float(dao_discord_l['Total users'][0]),3),
         # delta=1,
         # number = {'suffix': "%"},
         title="Discord community",
-        delta = {'position': "bottom", 'reference': round(float(dao_discord_l['Total users'][1]),3)},
+        #delta = {'position': "bottom", 'reference': round(float(dao_discord_l['Total users'][1]),3)},
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
     fig.update_layout(height=260, width=600)
@@ -158,12 +158,12 @@ with Community:
     dao_discord_r=discord_df[discord_df['Dao Name']==dao_name_r].sort_values(by='Date',ascending=False)
     dao_discord_r.reset_index(inplace=True)
     fig = go.Figure(go.Indicator(
-        mode = "number+delta",
+        mode = "number",
         value = round(float(dao_discord_r['Total users'][0]),3),
         # delta=1,
         # number = {'suffix': "%"},
         title="Discord community",
-        delta = {'position': "bottom", 'reference': round(float(dao_discord_r['Total users'][1]),3)},
+        #delta = {'position': "bottom", 'reference': round(float(dao_discord_r['Total users'][1]),3)},
         domain = {'x': [0, 1], 'y': [0, 1]}))
     fig.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
     fig.update_layout(height=260, width=600)
