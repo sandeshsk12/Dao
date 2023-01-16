@@ -45,7 +45,7 @@ dao_name_r = c3.selectbox(
     ('MetricsDAO', 'Biconomy'), key='right')
 
 st.write('You selected : {} and {}'.format(dao_name_l,dao_name_r))
-dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview**','**Community**','**DAO metrics**','**Governance**'])
+dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview**','**Community**','**Tokenomics**','**Governance**'])
 
 
 
@@ -311,10 +311,10 @@ with Community:
 
 
     with project_metrics:
-        Reach, Retention, Revenue = st.tabs(['**Reach**','**Retention**','**Revenue**'])
-    with Reach: 
-        st.write('a')
-    with Retention :
+        #Reach, Retention, Revenue = st.tabs(['**Reach**','**Retention**','**Revenue**'])
+    #with Reach: 
+        #st.write('a')
+    #with Retention :
        ##### Dao numbers
         c1,c2,c3=st.columns(3)
         dao_metrics_period=c2.radio(
@@ -334,7 +334,7 @@ with Community:
         New_vs_existing_users_trend_l=px.bar(New_vs_existing_users_df_l,x=New_vs_existing_users_df_l.index,y=['existing_users','new_users_count'], color_discrete_sequence=color)
         New_vs_existing_users_trend_l.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
         New_vs_existing_users_trend_l.update_layout(
-        title="New vs existing {} holders".format(dao_name_l),
+        title="New vs existing {} token holders".format(dao_name_l),
         xaxis_title="Date",
         yaxis_title="Holders",
         font=dict(
@@ -349,7 +349,7 @@ with Community:
         New_vs_existing_users_trend_r=px.bar(New_vs_existing_users_df_r,x=New_vs_existing_users_df_r.index,y=['existing_users','new_users_count'], color_discrete_sequence=color)
         New_vs_existing_users_trend_r.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
         New_vs_existing_users_trend_r.update_layout(
-        title="New vs existing {} holders".format(dao_name_r),
+        title="New vs existing {} token holders".format(dao_name_r),
         xaxis_title="Date",
         yaxis_title="Holders",
         font=dict(
