@@ -36,6 +36,15 @@ st.markdown(f"""
   </div>
 """, unsafe_allow_html=True)
 
+def grey_card(header='',title='',text=''):
+    return f"""
+    <div class="card text-white bg-secondary mb-" style="margin:1rem;" >
+    <div class="card-header">{header}</div>
+    <div class="card-body">
+    <h3 class="card-title">{title}</h3>
+    <p class="card-text">{text}   
+    """
+
 c1,c2,c3=st.columns((20,40,40))
 dao_name_l = c2.selectbox(
     'Which DAO would you like to know about ?',
@@ -55,7 +64,22 @@ dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview*
 
 
 with dao_overview:
-    st.write('DAO overview')
+    st.markdown(grey_card(title='What Is Biconomy? ',text=
+    """
+    What is Biconomy?
+    Biconomy envisions building the web3 infra that will help onboard the next billion users. The Biconomy DAO invites community members & $BICO \
+    token holders to participate via decision making, creating awareness, supporting web3 builders, and discussing new features. Learn more about \
+    Biconomy DAO: https://biconomy.notion.site/Welcome-to-Biconomy-DAO-d87669823cb84e98878174b6d10fd65e
+    """
+    ),unsafe_allow_html=True)
+    
+    st.markdown(grey_card(title='What Is Biconomy? ',text=
+    """
+    What is MetricsdDao?
+    MetricsDAO is the dao for web3 data and analytics. Leveraging hundreds of talented analysts, it enables the creation of on-demand blockchain \
+    analytics at scale, with the speed and flexibility this space needs to succeed. Read more: https://docs.metricsdao.xyz/
+    """
+    ),unsafe_allow_html=True)
 
 with Community:
 
@@ -398,6 +422,26 @@ with Community:
         xaxis=dict(showgrid=False),
         yaxis=dict(showgrid=True))
         c2.plotly_chart(stickiness_ratio_trend_r,use_container_width=True)
+        
+    #hardcoded for now, will be made to change dynamically in next version.
+    st.markdown(grey_card(title='Biconomy tokenization model ',text=
+    """
+    What is the Biconomy token?
+    $BICO is the native work & governance token of the Biconomy multi-chain relayer infrastructure. Its total supply is 1 billion, and 115M of it \
+    curculating according to the latest data available as of January 2023. Over 38% of the BICO supply is allocated to community members as rewards and \
+    incentives (on a 47-month release schedule), compared to 32% combined to the foundation and team and advisors (on a 3-year vesting schedule). \
+    Read more here: https://medium.com/biconomy/bico-token-economics-b33ff71f673d
+    """
+    ),unsafe_allow_html=True)
+    st.markdown(grey_card(title='Biconomy tokenization model ',text=
+    """
+    What is the MetricsDao token?
+    xMETRIC is a beta token of MetricsDAO. It does not have any monetary value and not transferrable, and only used as on-chain \
+    immutable proof of early participation in the DAO. xMETRIC tokens are not now, and will never be, transferrable, nor do they confer any \
+    rights whatsoever to holders of xMETRIC tokens (including but not limited to voting rights; governance rights; or rights to any profits, \
+    losses or distributions of any person, organization, DAO or other entity or group). Learn more about xMETRIC: https://docs.metricsdao.xyz/metricsdao/xmetric
+    """
+    ),unsafe_allow_html=True)
     with governance:
         c1,c2,c3=st.columns(3)
         gov_period=c2.radio(
@@ -410,6 +454,27 @@ with Community:
 
 
     ######### proposals
+        st.markdown(grey_card(title='Biconomy governance model ',text=
+        """
+        Biconomy DAO’s governance process enables proposals around grants, and the distribution of funding for them. Currently only $25k+ grants go \
+        through this governance process, while smaller amounts are managed via the Biconomy Rapid Grants Ecosystem. Biconomy DAO governance utilizes the \
+        stack including: Discord for preliminary conversations, Discourse forum where BICO token holders can submit Biconomy Grant Proposals with the help of a \
+        Biconomy steward, Snapshot for consensus voting based on BICO token holdings (1 BICO = 1 vote), and finally a multisig Treasury wallet for payouts that \
+        successfully pass the vote with a quorum\
+        (~13% i.e. 15M of circulating supply of BICO). Learn more: https://biconomy.notion.site/Biconomy-DAO-Governance-Voting-Process-ecf64e6e9c53415aa0d79c0f37cf95ae
+        """
+        ),unsafe_allow_html=True)
+        st.markdown(grey_card(title='Biconomy governance model ',text=
+        """
+        MetricsDAO utilizes a Discourse and Snapshot stack for voting, gated by Contributor and Governor badges for the respective season of the DAO. \
+        Any DAO member who holds the contributor badge can post a proposal to the forum, which will start a 48 hour period for feedback.After 48 hours, \
+        if there is no feedback that would stop the proposal, a poll is posted on Snapshot for all eligible pod contributors to vote on. If it passes, \
+        the proposal will move to the Governing Council for ratification. If a DAO member holds the governor badge in addition to the contributor badge, \
+        they must also post a proposal on the forum for feedback, but can bypass the Snapshot poll as long as there is no opposition on the forum. \
+        These proposals will be sent directly from the forum to the Governance Council to \
+        ratify and vote on. Learn more: https://docs.metricsdao.xyz/metricsdao/constitution#article-ii-operations
+        """
+        ),unsafe_allow_html=True)
         c1,c2=st.columns((70,30))
         proposal_trend=pd.read_csv('governance/proposal_trend.csv')
         proposal_trend_l=proposal_trend[proposal_trend['Name']==dao_name_l]  
