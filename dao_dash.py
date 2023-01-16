@@ -44,7 +44,7 @@ dao_name_r = c3.selectbox(
     'Which DAO would you like to know about ?',
     ('MetricsDAO', 'Biconomy', 'Mobile phone'), key='right')
 
-st.write('You selected:{} and {}'.format(dao_name_l,dao_name_r))
+st.write('You selected : {} and {}'.format(dao_name_l,dao_name_r))
 dao_overview, Community, project_metrics, governance = st.tabs(['**DAO overview**','**Community**','**DAO metrics**','**Governance**'])
 
 
