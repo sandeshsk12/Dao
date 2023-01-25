@@ -91,7 +91,7 @@ with Community:
     mode = "number+delta",
     value = round(float(dao_discord['Total users'][0]),3),
     # delta=1,
-    # number = {'suffix': "%"},s
+    # number = {'suffix': "%"},
     title="Discord community",
     delta = {'position': "bottom", 'reference': round(float(dao_discord['Total users'][1]),3)},
     domain = {'x': [0, 1], 'y': [0, 1]}))
