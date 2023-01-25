@@ -9,3 +9,4 @@ shroomdk
 plost
 pytrends
 gspread
+gspread_dataframe
