@@ -49,7 +49,7 @@ def grey_card(header='',title='',text=''):
     """
 
 
-gc = gs.service_account(filename='/media/sandesh/7b4515cf-7277-44bc-a068-425d5c6990f9/crypto/dummy/credentials.json')
+gc = gs.service_account(filename='credentials.json')
 sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1wmVhR3GYJIcAvKR1j_XawVwbTI0Vmi_8K5Bv4vGGHF8/edit?usp=sharing')
 ws = sh.worksheet('dao_details')
 dao_details = pd.DataFrame(ws.get_all_records())
