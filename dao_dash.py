@@ -364,7 +364,6 @@ with Community:
 
         name = dao_name_l
         description = dao_details[dao_details['Name']==dao_name_l]['Tokenization model'].values[0]
-        st.write(dao_details)
         st.markdown(grey_card(title='{} tokenization model '.format(name),text=
         """What is the {} token? <br> {}
         """.format(name,description)
