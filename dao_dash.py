@@ -53,7 +53,7 @@ gc = gs.service_account(filename='credentials.json')
 sh = gc.open_by_url('https://docs.google.com/spreadsheets/d/1wmVhR3GYJIcAvKR1j_XawVwbTI0Vmi_8K5Bv4vGGHF8/edit?usp=sharing')
 ws = sh.worksheet('dao_details')
 dao_details = pd.DataFrame(ws.get_all_records())
-st.write(dao_details)
+
 
 
 
@@ -63,7 +63,7 @@ st.write(dao_details)
 c1,c2,c3=st.columns((20,40,40))
 dao_name_l = c2.selectbox(
     'Which DAO would you like to know about ?',
-    dao_details['Name'], key='left',index=1)
+    dao_details['Name'], key='left',index=2)
 dao_name_r = c3.selectbox(
     'Which DAO would you like to know about ?',
     dao_details['Name'], key='right',index=1)
