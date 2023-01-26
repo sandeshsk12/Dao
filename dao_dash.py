@@ -18,7 +18,7 @@ import plotly.graph_objects as go
 from pytrends.request import TrendReq
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
-
+import cred
 pytrends = TrendReq(hl='en-US', tz=360) 
 import streamlit as st 
 import streamlit.components.v1 as components
@@ -425,47 +425,48 @@ with Community:
 
 
 
-        ######## stickiness ratio
-        # stickiness_ratio_df=pd.read_csv('RRR/stickiness_ratio.csv')
-        ws = sh.worksheet('stickiness_ratio')
-        stickiness_ratio_df = pd.DataFrame(ws.get_all_records())
-        stickiness_ratio_df_l=stickiness_ratio_df[stickiness_ratio_df['dao_name']==dao_name_l]
-        stickiness_ratio_df_l.fillna(0,inplace=True)
+        # ######## stickiness ratio
+        # # stickiness_ratio_df=pd.read_csv('RRR/stickiness_ratio.csv')
+        # ws = sh.worksheet('stickiness_ratio')
+        # stickiness_ratio_df = pd.DataFrame(ws.get_all_records())
+        # stickiness_ratio_df_l=stickiness_ratio_df[stickiness_ratio_df['dao_name']==dao_name_l]
+        # stickiness_ratio_df_l.fillna(0,inplace=True)
     
-        stickiness_ratio_df_l['date']=pd.to_datetime(stickiness_ratio_df_l['date'])
-        # stickiness_ratio_df=stickiness_ratio_df.resample(dao_metrics_period[0], on='date').mean()
-        color=['#fa750f','#ebb186']
-        stickiness_ratio_trend_l=px.line(stickiness_ratio_df_l,x=stickiness_ratio_df_l.index,y=stickiness_ratio_df_l['stickiness_ratio'], color_discrete_sequence=color)
-        stickiness_ratio_trend_l.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
-        stickiness_ratio_trend_l.update_layout(
-        title="Stickiness percentage",
-        xaxis_title="Date",
-        yaxis_title="percentage",
-        font=dict(
-            color="White"
-        ),
-        xaxis=dict(showgrid=False),
-        yaxis=dict(showgrid=True))
-        c1.plotly_chart(stickiness_ratio_trend_l,use_container_width=True)
-                ######## stickiness ratio
-        stickiness_ratio_df_r=stickiness_ratio_df[stickiness_ratio_df['dao_name']==dao_name_r]
-        stickiness_ratio_df_r.fillna(0,inplace=True)
+        # stickiness_ratio_df_l['date']=pd.to_datetime(stickiness_ratio_df_l['date'])
+        # # stickiness_ratio_df=stickiness_ratio_df.resample(dao_metrics_period[0], on='date').mean()
+        # color=['#fa750f','#ebb186']
+        # st.write(stickiness_ratio_df_l)
+        # stickiness_ratio_trend_l=px.line(stickiness_ratio_df_l,x=stickiness_ratio_df_l['date'],y=stickiness_ratio_df_l['stickiness_ratio'], color_discrete_sequence=color,range_y=[0,1])
+        # stickiness_ratio_trend_l.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+        # stickiness_ratio_trend_l.update_layout(
+        # title="Stickiness percentage",
+        # xaxis_title="Date",
+        # yaxis_title="percentage",
+        # font=dict(
+        #     color="White"
+        # ),
+        # xaxis=dict(showgrid=False),
+        # yaxis=dict(showgrid=True))
+        # c1.plotly_chart(stickiness_ratio_trend_l,use_container_width=True)
+        #         ######## stickiness ratio
+        # stickiness_ratio_df_r=stickiness_ratio_df[stickiness_ratio_df['dao_name']==dao_name_r]
+        # stickiness_ratio_df_r.fillna(0,inplace=True)
     
-        stickiness_ratio_df_r['date']=pd.to_datetime(stickiness_ratio_df_r['date'])
-        # stickiness_ratio_df=stickiness_ratio_df.resample(dao_metrics_period[0], on='date').mean()
-        color=['#4287f5','#84aff5'] 
-        stickiness_ratio_trend_r=px.line(stickiness_ratio_df_r,x=stickiness_ratio_df_r.index,y=stickiness_ratio_df_r['stickiness_ratio'], color_discrete_sequence=color)
-        stickiness_ratio_trend_r.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
-        stickiness_ratio_trend_r.update_layout(
-        title="Stickiness percentage",
-        xaxis_title="Date",
-        yaxis_title="percentage",
-        font=dict(
-            color="White"
-        ),
-        xaxis=dict(showgrid=False),
-        yaxis=dict(showgrid=True))
-        c2.plotly_chart(stickiness_ratio_trend_r,use_container_width=True)
+        # stickiness_ratio_df_r['date']=pd.to_datetime(stickiness_ratio_df_r['date'])
+        # # stickiness_ratio_df=stickiness_ratio_df.resample(dao_metrics_period[0], on='date').mean()
+        # color=['#4287f5','#84aff5'] 
+        # stickiness_ratio_trend_r=px.line(stickiness_ratio_df_r,x=stickiness_ratio_df_r['date'],y=stickiness_ratio_df_r['stickiness_ratio'], color_discrete_sequence=color,range_y=[0,1])
+        # stickiness_ratio_trend_r.update_layout({'plot_bgcolor': 'rgba(100, 0, 0, 0)','paper_bgcolor': 'rgba(25,25,25,255)',})
+        # stickiness_ratio_trend_r.update_layout(
+        # title="Stickiness percentage",
+        # xaxis_title="Date",
+        # yaxis_title="percentage",
+        # font=dict(
+        #     color="White"
+        # ),
+        # xaxis=dict(showgrid=False),
+        # yaxis=dict(showgrid=True))
+        # c2.plotly_chart(stickiness_ratio_trend_r,use_container_width=True)
         
     
     with governance:
